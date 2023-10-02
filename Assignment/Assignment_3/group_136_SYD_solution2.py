@@ -1,9 +1,6 @@
 import tkinter as tk
 from tkinter import messagebox
 
-import tkinter as tk
-from tkinter import messagebox
-
 class Task:
     def __init__(self, title, description, completed=False):
         self.title = title
@@ -16,10 +13,6 @@ class ToDoListApp:
         self.root = root
         self.root.title("To-Do List App")
 
-        # Initialize the list to store tasks and load existing tasks
-        self.tasks = []
-        self.load_tasks()
-
         # Create GUI elements (labels, entry fields, buttons)
         self.title_label = tk.Label(root, text="Title:")
         self.title_label.pack()
@@ -31,11 +24,15 @@ class ToDoListApp:
         self.description_entry = tk.Entry(root)
         self.description_entry.pack()
 
-        self.add_button = tk.Button(root, text="Add Task", command=self.add_task)
-        self.add_button.pack()
-
         self.task_listbox = tk.Listbox(root, width=50)
         self.task_listbox.pack()
+
+        # Initialize the list to store tasks and load existing tasks
+        self.tasks = []
+        self.load_tasks()
+
+        self.add_button = tk.Button(root, text="Add Task", command=self.add_task)
+        self.add_button.pack()
 
         self.edit_button = tk.Button(root, text="Edit Task", command=self.edit_task)
         self.edit_button.pack()
@@ -120,23 +117,6 @@ class ToDoListApp:
         for i, task in enumerate(self.tasks):
             status = "Completed" if task.completed else "Incomplete"
             self.task_listbox.insert(tk.END, f"{i+1}. {task.title} ({status})")
-
-        # # Clear the checkboxes frame and create checkboxes
-        # for widget in self.checkbox_frame.winfo_children():
-        #     widget.destroy()
-
-        # for i, task in enumerate(self.tasks):
-        #     status = "Completed" if task.completed else "Incomplete"
-        #     task_checkbox = tk.Checkbutton(self.checkbox_frame, text=f"{i+1}. {task.title}", command=lambda i=i: self.toggle_complete(i))
-        #     task_checkbox.select() if task.completed else task_checkbox.deselect()
-        #     task_checkbox.pack(anchor="w")
-
-    # def toggle_complete(self, index):
-    #     # Toggle the completion status of the selected task
-    #     self.tasks[index].completed = not self.tasks[index].completed
-    #     # Update the task list in the GUI
-    #     self.update_task_listbox()
-
 
     def clear_entry_fields(self):
         # Clear the title and description entry fields
