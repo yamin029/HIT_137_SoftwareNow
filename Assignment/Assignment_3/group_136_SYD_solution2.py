@@ -1,5 +1,6 @@
 import tkinter as tk
 from tkinter import messagebox
+import enchant
 
 class Task:
     def __init__(self, title, description, completed=False):
@@ -53,6 +54,13 @@ class ToDoListApp:
         # Update the task list in the GUI
         self.update_task_listbox()
 
+        # Create an English dictionary for spelling check
+        self.dictionary = enchant.Dict("en_US")
+
+    def is_spelling_correct(self, text):
+        # Check if the spelling is correct using the English dictionary
+        return self.dictionary.check(text)
+
     def add_task(self):
         # Get title and description from the user's input
         title = self.title_entry.get()
@@ -60,12 +68,16 @@ class ToDoListApp:
 
         # Check if the title is empty
         if title:
-            # Create a new task and add it to the list
-            task = Task(title, description)
-            self.tasks.append(task)
-            # Update the task list in the GUI and clear entry fields
-            self.update_task_listbox()
-            self.clear_entry_fields()
+            # Check spelling before adding the task
+            if self.is_spelling_correct(title) and self.is_spelling_correct(description):
+                # Create a new task and add it to the list
+                task = Task(title, description)
+                self.tasks.append(task)
+                # Update the task list in the GUI and clear entry fields
+                self.update_task_listbox()
+                self.clear_entry_fields()
+            else:
+                messagebox.showwarning("Warning", "Spelling check failed. Please correct your input.")
         else:
             # Display a warning if the title is empty
             messagebox.showwarning("Warning", "Title cannot be empty!")
@@ -80,12 +92,16 @@ class ToDoListApp:
             new_description = self.description_entry.get()
             # Check if the new title is empty
             if new_title:
-                # Update the selected task's title and description
-                self.tasks[selected_task_index].title = new_title
-                self.tasks[selected_task_index].description = new_description
-                # Update the task list in the GUI and clear entry fields
-                self.update_task_listbox()
-                self.clear_entry_fields()
+                # Check spelling before updating the task
+                if self.is_spelling_correct(new_title) and self.is_spelling_correct(new_description):
+                    # Update the selected task's title and description
+                    self.tasks[selected_task_index].title = new_title
+                    self.tasks[selected_task_index].description = new_description
+                    # Update the task list in the GUI and clear entry fields
+                    self.update_task_listbox()
+                    self.clear_entry_fields()
+                else:
+                    messagebox.showwarning("Warning", "Spelling check failed. Please correct your input.")
             else:
                 # Display a warning if the new title is empty
                 messagebox.showwarning("Warning", "Title cannot be empty!")
