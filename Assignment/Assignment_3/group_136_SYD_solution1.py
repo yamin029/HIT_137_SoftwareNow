@@ -1,3 +1,12 @@
+#####
+# Group Number: 136
+# STUDENT NAME: Yamin Hossain
+# STUDENT NUMBER: S371068
+# STUDENT NAME: SALMA FARIHA EERA
+# STUDENT NUMBER: S371692
+# STUDENT NAME: IFROIM DEWAN
+# STUDENT NUMBER: 
+####
 # Import necessary libraries
 import turtle  # Turtle graphics library for creating the clock
 import time    # Time library for tracking and updating time

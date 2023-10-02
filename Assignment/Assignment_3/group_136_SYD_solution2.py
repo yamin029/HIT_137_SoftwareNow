@@ -1,5 +1,16 @@
+#####
+# Group Number: 136
+# STUDENT NAME: Yamin Hossain
+# STUDENT NUMBER: S371068
+# STUDENT NAME: SALMA FARIHA EERA
+# STUDENT NUMBER: S371692
+# STUDENT NAME: IFROIM DEWAN
+# STUDENT NUMBER: 
+####
+# Importing necessary modules from the tkinter library
 import tkinter as tk
 from tkinter import messagebox
+# Importing the enchant library for spell checking
 import enchant
 
 # Define the Task class to represent individual tasks in the to-do list
