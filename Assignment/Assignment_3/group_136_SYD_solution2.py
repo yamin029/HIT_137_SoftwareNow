@@ -2,12 +2,14 @@ import tkinter as tk
 from tkinter import messagebox
 import enchant
 
+# Define the Task class to represent individual tasks in the to-do list
 class Task:
     def __init__(self, title, description, completed=False):
         self.title = title
         self.description = description
         self.completed = completed
 
+# Define the ToDoListApp class, which represents the main application
 class ToDoListApp:
     def __init__(self, root):
         # Initialize the main application window
@@ -32,6 +34,7 @@ class ToDoListApp:
         self.tasks = []
         self.load_tasks()
 
+        # Create buttons for various actions
         self.add_button = tk.Button(root, text="Add Task", command=self.add_task)
         self.add_button.pack()
 
@@ -57,10 +60,14 @@ class ToDoListApp:
         # Create an English dictionary for spelling check
         self.dictionary = enchant.Dict("en_US")
 
+    # Method to check if the spelling is correct, skipping if the word starts with a capital letter
     def is_spelling_correct(self, text):
-        # Check if the spelling is correct using the English dictionary
-        return self.dictionary.check(text)
+        if text[0].isupper():
+            return True  # Skip spelling check for words starting with a capital letter
+        else:
+            return self.dictionary.check(text)
 
+    # Method to add a new task to the list
     def add_task(self):
         # Get title and description from the user's input
         title = self.title_entry.get()
@@ -82,6 +89,7 @@ class ToDoListApp:
             # Display a warning if the title is empty
             messagebox.showwarning("Warning", "Title cannot be empty!")
 
+    # Method to edit an existing task
     def edit_task(self):
         # Get the index of the selected task in the listbox
         selected_task_index = self.task_listbox.curselection()
@@ -106,6 +114,7 @@ class ToDoListApp:
                 # Display a warning if the new title is empty
                 messagebox.showwarning("Warning", "Title cannot be empty!")
 
+    # Method to remove an existing task
     def remove_task(self):
         # Get the index of the selected task in the listbox
         selected_task_index = self.task_listbox.curselection()
@@ -117,6 +126,7 @@ class ToDoListApp:
             self.update_task_listbox()
             self.clear_entry_fields()
 
+    # Method to mark a task as completed
     def complete_task(self):
         # Get the index of the selected task in the listbox
         selected_task_index = self.task_listbox.curselection()
@@ -127,6 +137,7 @@ class ToDoListApp:
             # Update the task list in the GUI
             self.update_task_listbox()
 
+    # Method to update the task list in the GUI
     def update_task_listbox(self):
         # Clear the task listbox and populate it with task titles
         self.task_listbox.delete(0, tk.END)
@@ -134,20 +145,20 @@ class ToDoListApp:
             status = "Completed" if task.completed else "Incomplete"
             self.task_listbox.insert(tk.END, f"{i+1}. {task.title} ({status})")
 
+    # Method to clear the title and description entry fields
     def clear_entry_fields(self):
-        # Clear the title and description entry fields
         self.title_entry.delete(0, tk.END)
         self.description_entry.delete(0, tk.END)
 
+    # Method to save tasks to a text file
     def save_tasks(self):
-        # Save tasks to a text file
         with open("tasks.txt", "w") as file:
             for task in self.tasks:
                 file.write(f"{task.title},{task.description},{task.completed}\n")
 
+    # Method to load tasks from a text file
     def load_tasks(self):
         try:
-            # Load tasks from a text file
             with open("tasks.txt", "r") as file:
                 lines = file.readlines()
                 for line in lines:
@@ -161,7 +172,11 @@ class ToDoListApp:
             # If the file doesn't exist, ignore the error
             pass
 
+# Main entry point of the program
 if __name__ == "__main__":
+    # Create the main application window
     root = tk.Tk()
+    # Create an instance of the ToDoListApp class
     app = ToDoListApp(root)
+    # Start the main event loop
     root.mainloop()
