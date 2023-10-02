@@ -103,9 +103,9 @@ def update_clock_hands(window, hour_hand, minute_hand, second_hand, time_display
     hour = current_time.tm_hour % 12  # Convert to 12-hour format
 
     # Calculate angles for the hands
-    second_angle = 97 - (second / 60) * 360
-    minute_angle = 97 - ((minute + second / 60) / 60) * 360
-    hour_angle = 97 - ((hour + minute / 60) / 12) * 360
+    second_angle = 90 - (second / 60) * 360
+    minute_angle = 90 - ((minute + second / 60) / 60) * 360
+    hour_angle = 90 - ((hour + minute / 60) / 12) * 360
 
     # Rotate the hands
     second_hand.setheading(second_angle)
@@ -113,10 +113,6 @@ def update_clock_hands(window, hour_hand, minute_hand, second_hand, time_display
     hour_hand.setheading(hour_angle)
 
     window.update()
-
-    current_time_str = time.strftime("%I:%M:%S %p", current_time)
-    time_display.clear()
-    # time_display.write(current_time_str, align="center", font=("Arial", 20, "normal"))
 
 # Main function to run the clock
 def main():
